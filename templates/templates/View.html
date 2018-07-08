@@ -1,0 +1,35 @@
+<html>
+<head> View
+
+</head>
+<body>
+<p><h1>{{ name }} is viewing</h1></p>
+<table border="2px">
+    <tr><td><b>Picture ID</b></td>
+        <td><b>Image Title</b></td>
+        <td><b>Image</b></td>
+        <td><b>Last Modified Time</b></td>
+        <td><b>Current Rating</b></td>
+        <td><b>Rate the Picture</b></td>
+    </tr>
+{% for item in your_list %}
+			<tr><td>{{ item.get('picid') }} </td>
+    			<td>{{ item.get('title') }}</td>
+    			<td> <img src="{{ item.get('image_url') }}" style="width:100px;height:100px;"> </img> </td>
+    			<td>{{ item.get('last_modified_time') }}</td>
+                <td>{{ item.get('rating') }}</td>
+    			<td>
+    			<form action="/ratingfetch" method="post">
+              <input type="radio" name="rating" value={{ item.get('picid') }}> 1
+              <input type="radio" name="rating" value={{ item.get('picid') }}> 2
+              <input type="radio" name="rating" value={{ item.get('picid') }}> 3
+              <input type="radio" name="rating" value={{ item.get('picid') }}> 4
+              <input type="radio" name="rating" value={{ item.get('picid') }}> 5
+              <input type="submit" value="submit"/>
+             </form>
+    			</td>
+    			</tr>
+{% endfor %}
+</table> 
+</body>
+</html>
