@@ -4,15 +4,15 @@ from flask import Flask, render_template, request
 from botocore.client import Config
 
 
-ACCESS_KEY_ID = 'AKIAJSGMTKP4JEI7NJBA'
-ACCESS_SECRET_KEY = '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'
-BUCKET_NAME = 'shilpashree-s3'
+ACCESS_KEY_ID = ''
+ACCESS_SECRET_KEY = ''
+BUCKET_NAME = ''
 
 
-hostname = 'picturealbumdb.cckoj3pyomxt.us-east-2.rds.amazonaws.com'
-username = 'shilpa'
-password = 'admin123'
-database = 'PictureAlbumDB'
+hostname = ''
+username = ''
+password = ''
+database = ''
 myConnection = pymysql.connect( host=hostname, user=username, passwd=password, db=database, autocommit = True, cursorclass=pymysql.cursors.DictCursor, local_infile=True)
 
 print "Database Connected"
@@ -109,7 +109,7 @@ def upload():
     s3 = boto3.resource('s3', aws_access_key_id = ACCESS_KEY_ID, aws_secret_access_key= ACCESS_SECRET_KEY)
 
     f_name = request.form['title']  + ".JPG"
-    s3.Bucket('shilpashree-s3').put_object(Key=f_name, Body=request.files['myfile'])
+    s3.Bucket('s3').put_object(Key=f_name, Body=request.files['myfile'])
     for object in s3.Bucket('shilpashree-s3').objects.all():
        if (object.key == f_name):
            temp_file = object.key + '\t\t  ' + 'Size:  ' + str(object.size) + 'Last Updated ' + str(object.last_modified)
@@ -117,7 +117,7 @@ def upload():
            #picid = "1"
            title = str(object.key)
            #rating = "2"
-           image_url = "https://s3.us-east-2.amazonaws.com/shilpashree-s3/" + f_name
+           image_url = "https://s3.us-east-2.amazonaws.com/s3/" + f_name
            print image_url
            #no_of_ppl = "5"
            last_modified_time = str(object.last_modified)
@@ -137,4 +137,4 @@ def upload():
            return  render_template('index.html')
 
 if __name__ == '__main__':
-    app.run('127.0.0.1',8082)
+    app.run()
